@@ -10,7 +10,7 @@ function buyOnWhatsApp(productName, productPrice) {
 const products = [
     {
         id: 1,
-        name: 'Shotcrete Nozzle Tip',
+        name: 'SS CLAMP',
         image: 'images/product1.jpg',
         price: '₹2,500',
         description: 'Durable polyurethane tip for shotcrete machines. Ensures precise spray application.'
