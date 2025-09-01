@@ -1,77 +1,126 @@
-// Function to handle the WhatsApp redirection
-function buyOnWhatsApp(productName, productPrice) {
-    const whatsappNumber = '9310170486'; // Replace with your WhatsApp number (with country code)
-    const message = `Hi, I'm interested in buying the product: ${productName} (Price: ${productPrice}). Please provide me with more details.`;
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
-}
+// Configuration
+const WHATSAPP_NUMBER = '919310170486';
+const COMPANY_NAME = 'SPARE PARTS';
 
-// Product data array
-const products = [
-    {
-        id: 1,
-        name: 'SS CLAMP',
-        image: 'images/product1.jpg',
-        price: '₹2,500',
-        description: 'Durable polyurethane tip for shotcrete machines. Ensures precise spray application.'
+// Data for 9 categories and their products
+const categoriesData = {
+    'Filter': {
+        image: 'https://via.placeholder.com/300x150.png?text=Filter',
+        products: [
+            { name: 'Hydraulic Filter', price: '₹1,500', description: 'High-efficiency hydraulic filter.', image: 'https://via.placeholder.com/400x300.png?text=Hydraulic+Filter' },
+            { name: 'Air Filter', price: '₹800', description: 'Engine air filter for dust protection.', image: 'https://via.placeholder.com/400x300.png?text=Air+Filter' },
+            { name: 'Oil Filter', price: '₹1,200', description: 'Engine oil filter for particle removal.', image: 'https://via.placeholder.com/400x300.png?text=Oil+Filter' },
+        ]
     },
-    {
-        id: 2,
-        name: 'Boom Placer Hose',
-        image: 'images/product2.jpg',
-        price: '₹12,000',
-        description: 'High-pressure flexible hose for Boom Placer concrete pumps. Resists abrasion and wear.'
+    'Electricals': {
+        image: 'https://via.placeholder.com/300x150.png?text=Electricals',
+        products: [
+            { name: 'Control Panel', price: '₹10,000', description: 'Complete control panel for machinery.', image: 'https://via.placeholder.com/400x300.png?text=Control+Panel' },
+            { name: 'Sensor Module', price: '₹3,000', description: 'Precision sensor for machine diagnostics.', image: 'https://via.placeholder.com/400x300.png?text=Sensor' },
+            { name: 'Limit Switch', price: '₹800', description: 'Safety limit switch for machinery.', image: 'https://via.placeholder.com/400x300.png?text=Limit+Switch' },
+        ]
     },
-    {
-        id: 3,
-        name: 'Rotor & Stator Kit',
-        image: 'images/product3.jpg',
-        price: '₹25,000',
-        description: 'Complete kit for Shotcrete pump repair. Ensures consistent material flow and pressure.'
+    'Coupling': {
+        image: 'https://via.placeholder.com/300x150.png?text=Coupling',
+        products: [
+            { name: 'Shaft Coupling', price: '₹2,500', description: 'Durable coupling for power transmission.', image: 'https://via.placeholder.com/400x300.png?text=Shaft+Coupling' },
+            { name: 'Gear Coupling', price: '₹4,000', description: 'Robust gear coupling for heavy-duty applications.', image: 'https://via.placeholder.com/400x300.png?text=Gear+Coupling' },
+        ]
     },
-    {
-        id: 4,
-        name: 'Delivery Elbow',
-        image: 'images/product4.jpg',
-        price: '₹7,500',
-        description: 'Steel elbow with a robust design, suitable for high-pressure concrete delivery systems.'
+    'Pneumatics': {
+        image: 'https://via.placeholder.com/300x150.png?text=Pneumatics',
+        products: [
+            { name: 'Pneumatic Valve', price: '₹1,200', description: 'Reliable valve for pneumatic systems.', image: 'https://via.placeholder.com/400x300.png?text=Pneumatic+Valve' },
+            { name: 'Air Cylinder', price: '₹3,500', description: 'Cylinder for compressed air applications.', image: 'https://via.placeholder.com/400x300.png?text=Air+Cylinder' },
+        ]
     },
-    {
-        id: 5,
-        name: 'Coupling Clamp',
-        image: 'images/product5.jpg',
-        price: '₹950',
-        description: 'Heavy-duty quick release clamp for secure pipe connections. Galvanized for rust resistance.'
+    'Pipe Line': {
+        image: 'https://via.placeholder.com/300x150.png?text=Pipe+Line',
+        products: [
+            { name: 'Concrete Pump Pipe', price: '₹4,000', description: 'Robust pipe for high-pressure concrete delivery.', image: 'https://via.placeholder.com/400x300.png?text=Concrete+Pipe' },
+            { name: 'Reducer Pipe', price: '₹1,800', description: 'Pipe reducer for connecting different sizes.', image: 'https://via.placeholder.com/400x300.png?text=Reducer+Pipe' },
+        ]
     },
-    {
-        id: 6,
-        name: 'Concrete Pump Seal',
-        image: 'images/product6.jpg',
-        price: '₹1,500',
-        description: 'High-quality rubber seal for pump cylinders. Prevents leaks and maintains pressure.'
+    'Hose Pipe': {
+        image: 'https://via.placeholder.com/300x150.png?text=Hose+Pipe',
+        products: [
+            { name: 'Conveying Hose', price: '₹2,500', description: 'Durable hose for concrete and mortar.', image: 'https://via.placeholder.com/400x300.png?text=Conveying+Hose' },
+            { name: 'Hydraulic Hose', price: '₹1,500', description: 'Flexible and durable hose for fluid transfer.', image: 'https://via.placeholder.com/400x300.png?text=Hydraulic+Hose' },
+        ]
+    },
+    'Hopper Parts': {
+        image: 'https://via.placeholder.com/300x150.png?text=Hopper+Parts',
+        products: [
+            { name: 'Agitator Shaft', price: '₹7,500', description: 'Heavy-duty agitator shaft for uniform mixing.', image: 'https://via.placeholder.com/400x300.png?text=Agitator+Shaft' },
+            { name: 'Mixing Paddles', price: '₹2,000', description: 'Replacement paddles for concrete mixers.', image: 'https://via.placeholder.com/400x300.png?text=Mixing+Paddles' },
+        ]
+    },
+    'Hydraulics': {
+        image: 'https://via.placeholder.com/300x150.png?text=Hydraulics',
+        products: [
+            { name: 'Hydraulic Pump', price: '₹25,000', description: 'High-performance pump for hydraulic systems.', image: 'https://via.placeholder.com/400x300.png?text=Hydraulic+Pump' },
+            { name: 'S-Valve', price: '₹15,000', description: 'Critical S-valve for seamless concrete flow.', image: 'https://via.placeholder.com/400x300.png?text=S-Valve' },
+        ]
+    },
+    'Seals': {
+        image: 'https://via.placeholder.com/300x150.png?text=Seals',
+        products: [
+            { name: 'Oil Seal Kit', price: '₹800', description: 'Comprehensive kit for sealing hydraulic leaks.', image: 'https://via.placeholder.com/400x300.png?text=Oil+Seal' },
+            { name: 'Gasket Set', price: '₹1,500', description: 'High-temperature gaskets for pump systems.', image: 'https://via.placeholder.com/400x300.png?text=Gasket+Set' },
+        ]
+    },
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const categoriesGrid = document.getElementById('categories-grid');
+    const productList = document.getElementById('product-list');
+    const categoryTitle = document.getElementById('category-title');
+
+    // Logic for categories.html
+    if (categoriesGrid) {
+        for (const categoryName in categoriesData) {
+            const categoryData = categoriesData[categoryName];
+            const categoryCard = document.createElement('a');
+            categoryCard.href = `products.html?category=${encodeURIComponent(categoryName)}`;
+            categoryCard.classList.add('category-card');
+            categoryCard.innerHTML = `
+                <img src="${categoryData.image}" alt="${categoryName}">
+                <h3>${categoryName}</h3>
+            `;
+            categoriesGrid.appendChild(categoryCard);
+        }
     }
-    // Add more products here
-];
 
-// This script will only run on the products page
-if (document.getElementById('product-grid')) {
-    const productGrid = document.getElementById('product-grid');
+    // Logic for products.html
+    if (productList && categoryTitle) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const categoryName = urlParams.get('category');
 
-    // Generate product cards from the products array
-    products.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.className = 'product-card';
-        productCard.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" class="product-image">
-            <div class="product-details">
-                <h3>${product.name}</h3>
-                <p class="product-price">${product.price}</p>
-                <p class="product-description">${product.description}</p>
-                <button class="whatsapp-button" onclick="buyOnWhatsApp('${product.name}', '${product.price}')">
-                    <i class="fab fa-whatsapp"></i> Buy on WhatsApp
-                </button>
-            </div>
-        `;
-        productGrid.appendChild(productCard);
-    });
-}
+        if (categoryName && categoriesData[categoryName]) {
+            categoryTitle.textContent = categoryName;
+            const products = categoriesData[categoryName].products;
+
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+
+                const whatsappMessage = `Hello ${COMPANY_NAME}, I would like to inquire about the following product:%0A%0AProduct: ${product.name}%0APrice: ${product.price}%0A%0AThank you!`;
+                const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
+
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h4>${product.name}</h4>
+                    <p>${product.description}</p>
+                    <div class="price">${product.price}</div>
+                    <a href="${whatsappLink}" target="_blank" class="whatsapp-buy-button">
+                        <i class="fab fa-whatsapp"></i> Buy on WhatsApp
+                    </a>
+                `;
+                productList.appendChild(productCard);
+            });
+        } else {
+            // Redirect to categories page if no valid category is found
+            window.location.href = 'categories.html';
+        }
+    }
+});
