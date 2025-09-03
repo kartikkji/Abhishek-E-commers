@@ -355,6 +355,30 @@ h2::after {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
 }
+/* "View All Categories" button on homepage */
+.view-all {
+    display: flex;
+  margin-top: 30px;
+  justify-content: center;
+}
+
+.view-all .cta-button {
+
+  background: var(--primary-color);
+  color: #fff;
+  padding: 12px 30px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease-in-out;
+  display: inline-block;
+}
+
+.view-all .cta-button:hover {
+  background: #0056b3; /* tumhara primary ka darker shade */
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
 
 /* Contact Page */
 .contact-container {

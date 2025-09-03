@@ -1,136 +1,75 @@
 // Configuration
 const WHATSAPP_NUMBER = '919310170486';
 const COMPANY_NAME = 'SPARE PARTS';
-const IMAGE_GEN_URL = 'https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=';
 
-// Data for 9 categories and their products with prompts for image generation
+// Data for 9 categories and their products with fixed images
 const categoriesData = {
     'Filter': {
-        prompt: 'A close-up, high-quality, professional product photo of a heavy-duty machinery filter in a clean, modern setting.',
+        image: 'assets/category/Air-Oil-Separators[1].png',
         products: [
-            { name: 'Hydraulic Filter', price: '₹1,500', description: 'High-efficiency hydraulic filter.', image: 'https://via.placeholder.com/400x300.png?text=Hydraulic+Filter' },
-            { name: 'Air Filter', price: '₹800', description: 'Engine air filter for dust protection.', image: 'https://via.placeholder.com/400x300.png?text=Air+Filter' },
-            { name: 'Oil Filter', price: '₹1,200', description: 'Engine oil filter for particle removal.', image: 'https://via.placeholder.com/400x300.png?text=Oil+Filter' },
+            { name: 'Hydraulic Filter', price: '₹1,500', description: 'High-efficiency hydraulic filter.', image: 'assets/products/hydraulic-filter.png' },
+            { name: 'Air Filter', price: '₹800', description: 'Engine air filter for dust protection.', image: 'assets/products/air-filter.png' },
+            { name: 'Oil Filter', price: '₹1,200', description: 'Engine oil filter for particle removal.', image: 'assets/products/oil-filter.png' },
         ]
     },
     'Electricals': {
-        prompt: 'A professional product photo of a variety of industrial electrical components, including wires, circuit boards, and sensors, on a work table.',
+        image: 'assets/category/electricals.png',
         products: [
-            { name: 'Control Panel', price: '₹10,000', description: 'Complete control panel for machinery.', image: 'https://via.placeholder.com/400x300.png?text=Control+Panel' },
-            { name: 'Sensor Module', price: '₹3,000', description: 'Precision sensor for machine diagnostics.', image: 'https://via.placeholder.com/400x300.png?text=Sensor' },
-            { name: 'Limit Switch', price: '₹800', description: 'Safety limit switch for machinery.', image: 'https://via.placeholder.com/400x300.png?text=Limit+Switch' },
+            { name: 'Control Panel', price: '₹10,000', description: 'Complete control panel for machinery.', image: 'assets/products/control-panel.png' },
+            { name: 'Sensor Module', price: '₹3,000', description: 'Precision sensor for machine diagnostics.', image: 'assets/products/sensor.png' },
+            { name: 'Limit Switch', price: '₹800', description: 'Safety limit switch for machinery.', image: 'assets/products/limit-switch.png' },
         ]
     },
     'Coupling': {
-        prompt: 'A close-up, high-resolution photo of a metallic shaft coupling, showing its intricate design and robust construction.',
+        image: 'assets/category/coupling.png',
         products: [
-            { name: 'Shaft Coupling', price: '₹2,500', description: 'Durable coupling for power transmission.', image: 'https://via.placeholder.com/400x300.png?text=Shaft+Coupling' },
-            { name: 'Gear Coupling', price: '₹4,000', description: 'Robust gear coupling for heavy-duty applications.', image: 'https://via.placeholder.com/400x300.png?text=Gear+Coupling' },
+            { name: 'Shaft Coupling', price: '₹2,500', description: 'Durable coupling for power transmission.', image: 'assets/products/shaft-coupling.png' },
+            { name: 'Gear Coupling', price: '₹4,000', description: 'Robust gear coupling for heavy-duty applications.', image: 'assets/products/gear-coupling.png' },
         ]
     },
     'Pneumatics': {
-        prompt: 'A professional product photo of a pneumatic valve and a compressed air cylinder, showcasing clean, smooth metal surfaces.',
+        image: 'assets/category/pneumatics.jpg',
         products: [
-            { name: 'Pneumatic Valve', price: '₹1,200', description: 'Reliable valve for pneumatic systems.', image: 'https://via.placeholder.com/400x300.png?text=Pneumatic+Valve' },
-            { name: 'Air Cylinder', price: '₹3,500', description: 'Cylinder for compressed air applications.', image: 'https://via.placeholder.com/400x300.png?text=Air+Cylinder' },
+            { name: 'Pneumatic Valve', price: '₹1,200', description: 'Reliable valve for pneumatic systems.', image: 'assets/products/pneumatic-valve.png' },
+            { name: 'Air Cylinder', price: '₹3,500', description: 'Cylinder for compressed air applications.', image: 'assets/products/air-cylinder.png' },
         ]
     },
     'Pipe Line': {
-        prompt: 'A high-angle photo of a heavy-duty industrial pipe line, with a focus on its durability and wide diameter.',
+        image: 'assets/category/pipe-line.jpg',
         products: [
-            { name: 'Concrete Pump Pipe', price: '₹4,000', description: 'Robust pipe for high-pressure concrete delivery.', image: 'https://via.placeholder.com/400x300.png?text=Concrete+Pipe' },
-            { name: 'Reducer Pipe', price: '₹1,800', description: 'Pipe reducer for connecting different sizes.', image: 'https://via.placeholder.com/400x300.png?text=Reducer+Pipe' },
+            { name: 'Concrete Pump Pipe', price: '₹4,000', description: 'Robust pipe for high-pressure concrete delivery.', image: 'assets/products/concrete-pipe.png' },
+            { name: 'Reducer Pipe', price: '₹1,800', description: 'Pipe reducer for connecting different sizes.', image: 'assets/products/reducer-pipe.png' },
         ]
     },
     'Hose Pipe': {
-        prompt: 'A dynamic, high-quality photo of a durable, flexible hydraulic hose pipe coiled neatly, with metallic fittings visible.',
+        image: 'assets/category/hose-pipe.jpg',
         products: [
-            { name: 'Conveying Hose', price: '₹2,500', description: 'Durable hose for concrete and mortar.', image: 'https://via.placeholder.com/400x300.png?text=Conveying+Hose' },
-            { name: 'Hydraulic Hose', price: '₹1,500', description: 'Flexible and durable hose for fluid transfer.', image: 'https://via.placeholder.com/400x300.png?text=Hydraulic+Hose' },
+            { name: 'Conveying Hose', price: '₹2,500', description: 'Durable hose for concrete and mortar.', image: 'assets/products/conveying-hose.png' },
+            { name: 'Hydraulic Hose', price: '₹1,500', description: 'Flexible and durable hose for fluid transfer.', image: 'assets/products/hydraulic-hose.png' },
         ]
     },
     'Hopper Parts': {
-        prompt: 'A high-resolution photo of hopper parts, including an agitator shaft and mixing paddles, clean and ready for installation.',
+        image: 'assets/category/hopper parts.jpg',
         products: [
-            { name: 'Agitator Shaft', price: '₹7,500', description: 'Heavy-duty agitator shaft for uniform mixing.', image: 'https://via.placeholder.com/400x300.png?text=Agitator+Shaft' },
-            { name: 'Mixing Paddles', price: '₹2,000', description: 'Replacement paddles for concrete mixers.', image: 'https://via.placeholder.com/400x300.png?text=Mixing+Paddles' },
+            { name: 'Agitator Shaft', price: '₹7,500', description: 'Heavy-duty agitator shaft for uniform mixing.', image: 'assets/products/agitator-shaft.png' },
+            { name: 'Mixing Paddles', price: '₹2,000', description: 'Replacement paddles for concrete mixers.', image: 'assets/products/mixing-paddles.png' },
         ]
     },
     'Hydraulics': {
-        prompt: 'A detailed, professional photo of a hydraulic pump and an S-valve, showing their heavy-duty mechanical components.',
+        image: 'assets/category/Hyduralics.png',
         products: [
-            { name: 'Hydraulic Pump', price: '₹25,000', description: 'High-performance pump for hydraulic systems.', image: 'https://via.placeholder.com/400x300.png?text=Hydraulic+Pump' },
-            { name: 'S-Valve', price: '₹15,000', description: 'Critical S-valve for seamless concrete flow.', image: 'https://via.placeholder.com/400x300.png?text=S-Valve' },
+            { name: 'Hydraulic Pump', price: '₹25,000', description: 'High-performance pump for hydraulic systems.', image: 'assets/products/hydraulic-pump.png' },
+            { name: 'S-Valve', price: '₹15,000', description: 'Critical S-valve for seamless concrete flow.', image: 'assets/products/s-valve.png' },
         ]
     },
     'Seals': {
-        prompt: 'A close-up product photo of a variety of seals and gaskets, highlighting their flexible rubber and synthetic materials.',
+        image: 'assets/category/seals.png',
         products: [
-            { name: 'Oil Seal Kit', price: '₹800', description: 'Comprehensive kit for sealing hydraulic leaks.', image: 'https://via.placeholder.com/400x300.png?text=Oil+Seal' },
-            { name: 'Gasket Set', price: '₹1,500', description: 'High-temperature gaskets for pump systems.', image: 'https://via.placeholder.com/400x300.png?text=Gasket+Set' },
+            { name: 'Oil Seal Kit', price: '₹800', description: 'Comprehensive kit for sealing hydraulic leaks.', image: 'assets/products/oil-seal.png' },
+            { name: 'Gasket Set', price: '₹1,500', description: 'High-temperature gaskets for pump systems.', image: 'assets/products/gasket-set.png' },
         ]
     },
 };
-
-/**
- * Handles the fetch request to the image generation API with exponential backoff.
- * @param {string} url The API endpoint URL.
- * @param {object} options The fetch options.
- * @param {number} retries The number of retries left.
- * @param {number} delay The delay in milliseconds before the next retry.
- * @returns {Promise<Response>} The fetch response.
- */
-async function fetchWithRetry(url, options, retries = 5, delay = 1000) {
-    try {
-        const response = await fetch(url, options);
-        if (response.ok) {
-            return response;
-        } else if (response.status === 429 && retries > 0) {
-            await new Promise(resolve => setTimeout(resolve, delay));
-            return fetchWithRetry(url, options, retries - 1, delay * 2);
-        } else {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-    } catch (error) {
-        if (retries > 0) {
-            await new Promise(resolve => setTimeout(resolve, delay));
-            return fetchWithRetry(url, options, retries - 1, delay * 2);
-        } else {
-            throw error;
-        }
-    }
-}
-
-/**
- * Generates an image using the Imagen API.
- * @param {string} prompt The text prompt for the image.
- * @returns {Promise<string|null>} The base64-encoded image data URL or null on failure.
- */
-async function generateImage(prompt) {
-    const payload = {
-        instances: [{ prompt: prompt }],
-        parameters: { sampleCount: 1 }
-    };
-    const apiKey = "";
-    const apiUrl = `${IMAGE_GEN_URL}${apiKey}`;
-
-    try {
-        const response = await fetchWithRetry(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        const result = await response.json();
-        const base64Data = result?.predictions?.[0]?.bytesBase64Encoded;
-        if (base64Data) {
-            return `data:image/png;base64,${base64Data}`;
-        }
-        return null;
-    } catch (error) {
-        console.error("Image generation failed:", error);
-        return null;
-    }
-}
 
 document.addEventListener('DOMContentLoaded', () => {
     // Menu toggle for mobile
@@ -150,32 +89,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Logic for categories.html
     if (categoriesGrid) {
         const categoryNames = Object.keys(categoriesData);
-        
-        // Create skeleton cards and start image generation
+
         categoryNames.forEach(categoryName => {
             const categoryCard = document.createElement('a');
             categoryCard.href = `products.html?category=${encodeURIComponent(categoryName)}`;
             categoryCard.classList.add('category-card');
-            
-            // Add a loading state
+
+            const categoryImage = categoriesData[categoryName].image;
+
             categoryCard.innerHTML = `
-                <img src="https://via.placeholder.com/300x150.png?text=Loading..." alt="Loading image for ${categoryName}">
+                <img src="${categoryImage}" alt="${categoryName}">
                 <h3>${categoryName}</h3>
             `;
-            categoriesGrid.appendChild(categoryCard);
 
-            // Generate image for each category and update the card
-            const prompt = categoriesData[categoryName].prompt;
-            generateImage(prompt).then(imageUrl => {
-                const imgElement = categoryCard.querySelector('img');
-                if (imageUrl) {
-                    imgElement.src = imageUrl;
-                    imgElement.alt = `Image for ${categoryName}`;
-                } else {
-                    imgElement.src = `https://via.placeholder.com/300x150.png?text=Image+Failed`;
-                    imgElement.alt = `Image not available for ${categoryName}`;
-                }
-            });
+            categoriesGrid.appendChild(categoryCard);
         });
     }
 
